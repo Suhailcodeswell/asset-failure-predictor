@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OpsInsight Analytics — Asset Risk & Cost Intelligence</title>
+  <title>Asset Failure Predictor — Transport Operations</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -35,8 +35,8 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
         </svg>
       </div>
-      <h1 class="text-xl font-bold text-slate-900 mb-1">OpsInsight Analytics</h1>
-      <p class="text-sm text-gray-400 mb-6">Portfolio demo — enter access code</p>
+      <h1 class="text-xl font-bold text-slate-900 mb-1">Asset Failure Predictor</h1>
+      <p class="text-sm text-gray-400 mb-6">Transport operations demo — enter access code</p>
       <input type="password" id="login-password" placeholder="Access code"
         class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm text-center focus:outline-none focus:border-indigo-600 mb-3">
       <button id="login-btn" class="w-full bg-indigo-900 hover:bg-indigo-800 text-white font-semibold py-3 rounded-lg transition-all">
@@ -53,8 +53,8 @@
   <header class="bg-white border-b border-indigo-100 shadow-sm">
     <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
       <div>
-        <h1 class="text-2xl font-bold text-slate-900">OpsInsight Analytics</h1>
-        <p class="text-sm text-gray-500 mt-0.5">Asset Failure Risk · Cost Per Hour · Cost Per Mile</p>
+        <h1 class="text-2xl font-bold text-slate-900">Asset Failure Predictor</h1>
+        <p class="text-sm text-gray-500 mt-0.5">Transport operations · failure risk · cost per hour · cost per mile</p>
       </div>
       <div class="flex items-center gap-4">
         <div class="flex items-center gap-2">
@@ -110,8 +110,8 @@
   <!-- TAB: Home -->
   <main id="view-home" class="max-w-6xl mx-auto px-6 py-10">
     <div class="text-center mb-10">
-      <h2 class="text-3xl font-bold text-slate-900 mb-2">Operations Intelligence Platform</h2>
-      <p class="text-gray-500 max-w-2xl mx-auto">AI-built analytics for asset failure risk scoring, cost-per-hour modeling, cost-per-mile forecasting, and maintenance optimization across operational fleets.</p>
+      <h2 class="text-3xl font-bold text-slate-900 mb-2">Transport Operations Predictor</h2>
+      <p class="text-gray-500 max-w-2xl mx-auto">Predict asset failure risk on trips, forecast maintenance cost per hour and per mile, and prioritize fleet interventions for transport operations teams.</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -1884,18 +1884,18 @@
   </main>
 
   <footer class="max-w-7xl mx-auto px-6 py-6 text-center text-xs text-gray-400">
-    OpsInsight Analytics &mdash; Asset Failure Risk, Cost Forecasting &amp; Maintenance Intelligence &mdash; Portfolio Demo
+    Asset Failure Predictor &mdash; Transport Operations &mdash; Failure Risk, CPH &amp; CPM Modeling
   </footer>
 
   </div> <!-- end #main-app -->
 
   <script>
     const API = '/api/predict';
-    let AUTH_TOKEN = sessionStorage.getItem('opsinsight_token') || '';
+    let AUTH_TOKEN = sessionStorage.getItem('afp_token') || '';
 
     // Logout
     function logout() {
-      sessionStorage.removeItem('opsinsight_token');
+      sessionStorage.removeItem('afp_token');
       AUTH_TOKEN = '';
       document.getElementById('main-app').classList.add('hidden');
       document.getElementById('login-screen').classList.remove('hidden');
@@ -1918,7 +1918,7 @@
         const data = await res.json();
         if (data.authenticated) {
           AUTH_TOKEN = data.token;
-          sessionStorage.setItem('opsinsight_token', AUTH_TOKEN);
+          sessionStorage.setItem('afp_token', AUTH_TOKEN);
           document.getElementById('login-screen').classList.add('hidden');
           document.getElementById('main-app').classList.remove('hidden');
           loadData();
@@ -2746,7 +2746,7 @@
       // --- Sheet 1: Summary ---
       const ts = new Date().toISOString().replace('T',' ').slice(0,19) + ' UTC';
       const summaryRows = [
-        ['OpsInsight Fleet Dashboard Export'],
+        ['Asset Failure Predictor — Fleet Export'],
         ['Generated', ts],
         [],
         ['Active Filters'],
@@ -2875,7 +2875,7 @@
       // --- Save ---
       const activeFilter = filterState.filter(f => f.Value !== '(all)').map(f => f.Value).join('_').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 40);
       const stamp = new Date().toISOString().slice(0,10).replace(/-/g, '');
-      const fname = `opsinsight_fleet_${stamp}${activeFilter ? '_' + activeFilter : '_full'}.xlsx`;
+      const fname = `afp_fleet_${stamp}${activeFilter ? '_' + activeFilter : '_full'}.xlsx`;
       XLSX.writeFile(wb, fname);
     }
 
@@ -2889,7 +2889,7 @@
     let PILOT_DIFF_SORT = { key: 'drisk', asc: false };
     let PILOT_DIFF_PAGE = 0;
     const PILOT_DIFF_PAGE_SIZE = 25;
-    const PILOT_CONFIG_KEY = 'opsinsight_pilot_config_v1';
+    const PILOT_CONFIG_KEY = 'afp_pilot_config_v1';
 
     function loadPilotConfig() {
       try { return JSON.parse(localStorage.getItem(PILOT_CONFIG_KEY)) || {}; }
@@ -3393,7 +3393,7 @@
         XLSX.utils.book_append_sheet(wb, ws, g === 'intervention' ? 'Intervention' : 'Control');
       });
 
-      XLSX.writeFile(wb, `opsinsight_pilot_${new Date().toISOString().slice(0,10)}.xlsx`);
+      XLSX.writeFile(wb, `afp_pilot_${new Date().toISOString().slice(0,10)}.xlsx`);
     }
 
     // ---- Model Comparison Tab (Make × Model × Year × Season + per-model deep-dive) ----
@@ -3726,7 +3726,7 @@
       const baseWs = XLSX.utils.json_to_sheet(baseRows);
       XLSX.utils.book_append_sheet(wb, baseWs, 'Fleet Seasonal Baseline');
 
-      XLSX.writeFile(wb, `opsinsight_model_grid_${new Date().toISOString().slice(0,10)}.xlsx`);
+      XLSX.writeFile(wb, `afp_model_grid_${new Date().toISOString().slice(0,10)}.xlsx`);
     }
 
     function renderFleetTable() {

@@ -1,8 +1,8 @@
-# OpsInsight Analytics
+# Asset Failure Predictor
 
-**Asset failure risk scoring, cost-per-hour (CPH), and cost-per-mile (CPM) intelligence for operations teams.**
+**Transport operations tool for asset failure risk scoring, cost-per-hour (CPH), and cost-per-mile (CPM).**
 
-OpsInsight is a portfolio demonstration of an AI-assisted analytics product built for operational asset management. It packages three calibrated ML models into a single deployable web application:
+A portfolio demonstration of an AI-built software product for operational transport fleets. Three calibrated ML models ship in one deployable web application:
 
 | Module | What it predicts | Model |
 |--------|------------------|-------|
@@ -16,7 +16,7 @@ OpsInsight is a portfolio demonstration of an AI-assisted analytics product buil
 
 Deploy to [Vercel](https://vercel.com) with one click, or run locally (see below).
 
-**Demo access code:** `OpsInsight2026!`
+**Demo access code:** `AFPredict2026!`
 
 ## Features
 

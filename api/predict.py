@@ -1,4 +1,4 @@
-"""Vercel serverless function: OpsInsight Analytics Dashboard.
+"""Vercel serverless function: Asset Failure Predictor dashboard.
 Serves fleet-wide risk scores, PM analysis, unit lookup, and trip prediction.
 Uses pure-Python XGBoost tree walker + isotonic calibration — no ML runtime dependency."""
 import json
@@ -7,7 +7,7 @@ import math
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler
 
-AUTH_TOKEN = os.environ.get("AUTH_TOKEN", "OpsInsight2026!")
+AUTH_TOKEN = os.environ.get("AUTH_TOKEN", "AFPredict2026!")
 
 def check_auth(headers):
     token = headers.get('X-Auth-Token', '')
