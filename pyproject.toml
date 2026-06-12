@@ -1,0 +1,5 @@
+[project]
+name = "opsinsight-analytics"
+version = "0.1.0"
+dependencies = ["numpy==1.26.4"]
+requires-python = ">=3.10,<4"
