@@ -1,0 +1,9 @@
+,Alarm History Summary,,,,,,,,
+,Time Zone: (UTC - 5:00) Central Time,,,,,,,,
+,Speed Type: MPH,,,,,,,,
+,Abbreviations: R - Shutdown (High) Y - Check (Medium) G - Log (Low),,,,,,,,
+Vehicle Name,Unnamed: 1,Alarm Type,Severity,Zone,Pre-Trip,#,First Logged,Last Logged,Position
+HRTU673759,,33 Check Engine RPM,Y,,,3,01/03/2026 03:35:42 PM,2026-01-03 17:23:08,"1.60 miles West of Rocky View, Alberta, CAN"
+HRTU693051,,44 Check Fuel System,R,,,13,01/03/2026 02:41:36 PM,2026-01-15 12:52:07,"0.45 miles East of Arms, Ontario, CAN"
+HRTU693051,,96 Low Fuel Level,Y,,,62,01/03/2026 02:41:36 PM,2026-01-18 12:47:58,"0.54 miles North East of CN Montreal Yard, CAN"
+HRTU673864,,12 Pretrip or Self-Check Abort,R,,,1,01/10/2026 09:12:00 AM,2026-01-10 09:12:00,"CN Calgary Yard, CAN"
