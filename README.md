@@ -21,9 +21,8 @@ Deploy to [Vercel](https://vercel.com/new/import?s=https://github.com/Suhailcode
 1. Import the GitHub repo
 2. Framework preset: **Other**
 3. Deploy (no build command needed)
-4. Optional: set `AUTH_TOKEN` in Vercel env vars to change the login code
 
-**Demo access code:** `AFPredict2026!`
+Open the deployed URL — no login required.
 
 ## What's in this repo
 
@@ -85,7 +84,7 @@ npm i -g vercel
 vercel dev
 ```
 
-Open `http://localhost:3000` and sign in with the demo access code.
+Open `http://localhost:3000` — the app loads immediately with no login.
 
 Or use the lightweight dev server:
 

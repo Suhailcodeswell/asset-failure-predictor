@@ -20,7 +20,7 @@ spec.loader.exec_module(predict)
 class DevHandler(predict.handler):
     def do_GET(self):
         path = self.path.split("?")[0]
-        if path.startswith("/api") or "/auth" in self.path:
+        if path.startswith("/api"):
             return super().do_GET()
         return self._serve_static(path)
 
@@ -50,7 +50,6 @@ def main():
     server = HTTPServer(("127.0.0.1", port), DevHandler)
     url = f"http://127.0.0.1:{port}"
     print(f"Asset Failure Predictor dev server: {url}")
-    print("Access code: AFPredict2026!")
     server.serve_forever()
 
 

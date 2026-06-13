@@ -7,12 +7,6 @@ import math
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler
 
-AUTH_TOKEN = os.environ.get("AUTH_TOKEN", "AFPredict2026!")
-
-def check_auth(headers):
-    token = headers.get('X-Auth-Token', '')
-    return token == AUTH_TOKEN
-
 # ---- Load data files ----
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data')
 
@@ -1102,29 +1096,15 @@ def read_pilot_snapshot(snap_id):
 # ---- HTTP Handler ----
 
 class handler(BaseHTTPRequestHandler):
-    def _handle_auth(self):
-        from urllib.parse import urlparse, parse_qs
-        qs = parse_qs(urlparse(self.path).query)
-        password = qs.get('password', [''])[0]
-        if password == AUTH_TOKEN:
-            self._json_response(200, {'authenticated': True, 'token': AUTH_TOKEN})
-        else:
-            self._json_response(401, {'authenticated': False})
-
     def _json_response(self, status, data):
         self.send_response(status)
         self.send_header('Content-Type', 'application/json')
         self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         self.end_headers()
         self.wfile.write(json.dumps(data).encode())
 
-    def _reject_auth(self):
-        self._json_response(401, {'error': 'unauthorized'})
-
     def do_POST(self):
-        if not check_auth(self.headers):
-            return self._reject_auth()
         content_length = int(self.headers.get('Content-Length', 0))
         body = self.rfile.read(content_length)
         params = json.loads(body) if body else {}
@@ -1140,10 +1120,6 @@ class handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         path = self.path.split('?')[0]
-        if '/auth' in path:
-            return self._handle_auth()
-        if not check_auth(self.headers):
-            return self._reject_auth()
 
         if path.startswith('/api/'):
             endpoint = path[4:]
@@ -1215,5 +1191,5 @@ class handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type, X-Auth-Token')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
         self.end_headers()

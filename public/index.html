@@ -27,27 +27,6 @@
   </style>
 </head>
 <body class="bg-slate-50 min-h-screen">
-  <!-- LOGIN SCREEN -->
-  <div id="login-screen" class="min-h-screen flex items-center justify-center">
-    <div class="bg-white rounded-2xl border border-gray-200 shadow-xl p-10 w-full max-w-sm text-center">
-      <div class="w-16 h-16 mx-auto mb-6 rounded-full bg-indigo-900 flex items-center justify-center">
-        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-        </svg>
-      </div>
-      <h1 class="text-xl font-bold text-slate-900 mb-1">Asset Failure Predictor</h1>
-      <p class="text-sm text-gray-400 mb-6">Transport operations demo — enter access code</p>
-      <input type="password" id="login-password" placeholder="Access code"
-        class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm text-center focus:outline-none focus:border-indigo-600 mb-3">
-      <button id="login-btn" class="w-full bg-indigo-900 hover:bg-indigo-800 text-white font-semibold py-3 rounded-lg transition-all">
-        Enter
-      </button>
-      <p id="login-error" class="text-red-500 text-sm mt-3 hidden">Invalid access code</p>
-    </div>
-  </div>
-
-  <!-- MAIN APP (hidden until authenticated) -->
-  <div id="main-app" class="hidden">
 
   <!-- Header -->
   <header class="bg-white border-b border-indigo-100 shadow-sm">
@@ -61,7 +40,6 @@
           <div class="w-2.5 h-2.5 rounded-full bg-green-500 pulse"></div>
           <span class="text-xs text-gray-400 font-medium">Model Active</span>
         </div>
-        <button onclick="logout()" class="text-xs text-gray-400 hover:text-red-500 transition-colors">Logout</button>
       </div>
     </div>
     <!-- Tab Navigation -->
@@ -1887,92 +1865,35 @@
     Asset Failure Predictor &mdash; Transport Operations &mdash; Failure Risk, CPH &amp; CPM Modeling
   </footer>
 
-  </div> <!-- end #main-app -->
-
   <script>
     const API = '/api/predict';
-    let AUTH_TOKEN = sessionStorage.getItem('afp_token') || '';
-
-    // Logout
-    function logout() {
-      sessionStorage.removeItem('afp_token');
-      AUTH_TOKEN = '';
-      document.getElementById('main-app').classList.add('hidden');
-      document.getElementById('login-screen').classList.remove('hidden');
-      document.getElementById('login-password').value = '';
-      document.getElementById('login-error').classList.add('hidden');
-    }
-
-    // Auth helper — adds token to all fetch calls
-    function authFetch(url, options = {}) {
-      if (!options.headers) options.headers = {};
-      options.headers['X-Auth-Token'] = AUTH_TOKEN;
-      return fetch(url, options);
-    }
-
-    // Login function
-    async function login() {
-      const pw = document.getElementById('login-password').value;
-      try {
-        const res = await fetch('/api/auth?password=' + encodeURIComponent(pw));
-        const data = await res.json();
-        if (data.authenticated) {
-          AUTH_TOKEN = data.token;
-          sessionStorage.setItem('afp_token', AUTH_TOKEN);
-          document.getElementById('login-screen').classList.add('hidden');
-          document.getElementById('main-app').classList.remove('hidden');
-          loadData();
-        } else {
-          document.getElementById('login-error').classList.remove('hidden');
-        }
-      } catch(e) {
-        document.getElementById('login-error').classList.remove('hidden');
-      }
-    }
-
-    // Bind login button
-    document.getElementById('login-btn').addEventListener('click', login);
-    document.getElementById('login-password').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') login();
-    });
-
-    // Check if already authenticated
-    if (AUTH_TOKEN) {
-      authFetch('/api/units').then(r => {
-        if (r.ok) {
-          document.getElementById('login-screen').classList.add('hidden');
-          document.getElementById('main-app').classList.remove('hidden');
-          loadData();
-        }
-      }).catch(() => {});
-    }
 
     let ALL_UNITS = [];
     let TRAILER_MAP = {}; // trailer_num -> reefer_unit
 
     function loadData() {
     // Load units list
-    authFetch('/api/units')
+    fetch('/api/units')
       .then(r => r.json())
       .then(units => {
         ALL_UNITS = units.filter(u => u && u !== 'NaN');
       });
 
     // Load fleet data for trailer->reefer mapping
-    authFetch('/api/fleet')
+    fetch('/api/fleet')
       .then(r => r.json())
       .then(fleet => {
         // fleet is {reefer_unit: {info...}} but we need container_num
         // The fleet_lookup doesn't have container_num, so we'll use the /api/trailers endpoint
       }).catch(() => {});
 
-    authFetch('/api/trailers')
+    fetch('/api/trailers')
       .then(r => r.json())
       .then(data => { TRAILER_MAP = data; })
       .catch(() => {});
 
     // Load routes dropdown
-    authFetch('/api/routes')
+    fetch('/api/routes')
       .then(r => r.json())
       .then(routes => {
         const sel = document.getElementById('route');
@@ -1984,6 +1905,8 @@
         });
       });
     } // end loadData()
+
+    loadData();
 
     // Searchable unit input
     const unitInput = document.getElementById('reefer_unit');
@@ -2077,7 +2000,7 @@
         document.getElementById('unit-info').classList.add('hidden');
         return;
       }
-      authFetch(`/api/unit/${unit}`)
+      fetch(`/api/unit/${unit}`)
         .then(r => r.json())
         .then(data => {
           const info = data.info;
@@ -2147,7 +2070,7 @@
       };
 
       try {
-        const res = await authFetch(API, {
+        const res = await fetch(API, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(params),
@@ -2370,7 +2293,7 @@
     ];
 
     async function loadFleetDashboard() {
-      const fleetRes = await authFetch('/api/fleet-risk');
+      const fleetRes = await fetch('/api/fleet-risk');
       FLEET_DATA = await fleetRes.json();
       FLEET_BASELINE = computeStats(FLEET_DATA);
       populateFilterOptions(FLEET_DATA);
@@ -2926,7 +2849,7 @@
       if (!FLEET_DATA.length) { await loadFleetDashboard(); }
 
       try {
-        const res = await authFetch('/api/snapshots');
+        const res = await fetch('/api/snapshots');
         PILOT_SNAPSHOTS = await res.json();
       } catch (e) { PILOT_SNAPSHOTS = []; }
 
@@ -3066,7 +2989,7 @@
       }
       if (PILOT_FULL_CACHE[id]) return PILOT_FULL_CACHE[id];
       try {
-        const res = await authFetch('/api/snapshot/' + encodeURIComponent(id));
+        const res = await fetch('/api/snapshot/' + encodeURIComponent(id));
         if (!res.ok) return null;
         const full = await res.json();
         PILOT_FULL_CACHE[id] = full;
@@ -3406,8 +3329,8 @@
       const loadingEl = document.getElementById('models-loading');
       try {
         const [gridRes, analysisRes] = await Promise.all([
-          authFetch('/api/model-grid'),
-          authFetch('/api/model-analysis'),
+          fetch('/api/model-grid'),
+          fetch('/api/model-analysis'),
         ]);
         if (!gridRes.ok) throw new Error(`grid HTTP ${gridRes.status}`);
         if (!analysisRes.ok) throw new Error(`analysis HTTP ${analysisRes.status}`);
@@ -3833,7 +3756,7 @@
 
     async function loadRepairPatterns() {
       try {
-        const res = await authFetch('/api/repair-patterns');
+        const res = await fetch('/api/repair-patterns');
         if (!res.ok) throw new Error('API returned ' + res.status);
         REPAIR_PATTERN_DATA = await res.json();
         document.getElementById('repairs-loading').classList.add('hidden');
@@ -4058,8 +3981,8 @@
     async function loadHomeStats() {
       try {
         const [summaryRes, cphRes] = await Promise.all([
-          authFetch('/api/fleet-summary'),
-          authFetch('/api/cph-summary'),
+          fetch('/api/fleet-summary'),
+          fetch('/api/cph-summary'),
         ]);
         const summary = await summaryRes.json();
         const cph = await cphRes.json();
@@ -4109,8 +4032,8 @@
     async function loadCostAnalytics() {
       try {
         const [summaryRes, fleetRes] = await Promise.all([
-          authFetch('/api/cph-summary'),
-          authFetch('/api/cph-fleet'),
+          fetch('/api/cph-summary'),
+          fetch('/api/cph-fleet'),
         ]);
         CPH_SUMMARY_DATA = await summaryRes.json();
         CPH_FLEET_DATA = await fleetRes.json();
@@ -4259,7 +4182,7 @@
         AVG_DAYS_TO_FAILURE: 730,
       };
       try {
-        const res = await authFetch('/api/cph-predict', {
+        const res = await fetch('/api/cph-predict', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(params),
@@ -4304,8 +4227,8 @@
     async function loadCpmAnalytics() {
       try {
         const [summaryRes, fleetRes] = await Promise.all([
-          authFetch('/api/cpm-summary'),
-          authFetch('/api/cpm-fleet'),
+          fetch('/api/cpm-summary'),
+          fetch('/api/cpm-fleet'),
         ]);
         CPM_SUMMARY_DATA = await summaryRes.json();
         CPM_FLEET_DATA = await fleetRes.json();
@@ -4658,7 +4581,7 @@
         }
       });
       try {
-        const res = await authFetch('/api/cpm-predict', {
+        const res = await fetch('/api/cpm-predict', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(params),
