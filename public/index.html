@@ -89,11 +89,77 @@
     </div>
   </header>
 
+  <!-- Demo data disclosure banner -->
+  <div class="bg-amber-50 border-b border-amber-200">
+    <div class="max-w-7xl mx-auto px-6 py-2 flex items-center justify-center gap-2 text-center">
+      <svg class="w-4 h-4 text-amber-600 flex-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <p class="text-xs text-amber-800"><span class="font-semibold">Portfolio demo.</span> Every number on this site comes from a synthetic dataset built to mirror a real fleet — no client or NDA data. Same models, same pipeline, safe-to-share numbers.</p>
+    </div>
+  </div>
+
   <!-- TAB: Home -->
   <main id="view-home" class="max-w-6xl mx-auto px-6 py-10">
-    <div class="text-center mb-10">
-      <h2 class="text-3xl font-bold text-slate-900 mb-2">Transport Operations Predictor</h2>
-      <p class="text-gray-500 max-w-2xl mx-auto">Predict asset failure risk on trips, forecast maintenance cost per hour and per mile, and prioritize fleet interventions for transport operations teams.</p>
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-bold text-slate-900 mb-3">Which trucks will break down &mdash; and what does each one really cost?</h2>
+      <p class="text-gray-500 max-w-3xl mx-auto">This platform watches a fleet of <span class="font-semibold text-slate-700">840 refrigerated transport units</span> and answers two questions operations teams ask every day: <span class="font-semibold text-slate-700">"Is this trip likely to fail?"</span> and <span class="font-semibold text-slate-700">"Which units are eating our maintenance budget?"</span> Machine-learning models score every unit from its repair history, telematics, routes, and weather.</p>
+    </div>
+
+    <!-- How it works: 3-step pipeline -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm mb-8">
+      <h3 class="text-sm font-bold text-gray-900 mb-4">How it works &mdash; in 3 steps</h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="flex gap-3">
+          <span class="flex-none w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center text-sm">1</span>
+          <div>
+            <div class="text-sm font-semibold text-gray-900">Fleet data goes in</div>
+            <p class="text-xs text-gray-500 mt-0.5">2M+ records: 23,473 trips, work orders, telematics alarms, fuel fills, and route weather &mdash; merged into 83 features per trip.</p>
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <span class="flex-none w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center text-sm">2</span>
+          <div>
+            <div class="text-sm font-semibold text-gray-900">Models score every unit</div>
+            <p class="text-xs text-gray-500 mt-0.5">A calibrated XGBoost model predicts failure probability per trip (AUC 0.84). Separate models predict maintenance cost per hour and per mile.</p>
+          </div>
+        </div>
+        <div class="flex gap-3">
+          <span class="flex-none w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center text-sm">3</span>
+          <div>
+            <div class="text-sm font-semibold text-gray-900">Teams act on the output</div>
+            <p class="text-xs text-gray-500 mt-0.5">High-risk units get inspected before dispatch, chronic "money pits" get flagged for sell-vs-keep review, and PM schedules get budgeted by service code.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guided tour -->
+    <div class="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-xl border border-indigo-100 p-6 mb-10">
+      <div class="flex items-center justify-between flex-wrap gap-2 mb-3">
+        <h3 class="text-sm font-bold text-indigo-900">New here? Take the 60-second tour</h3>
+        <span class="text-[11px] text-indigo-400">3 stops &middot; no setup needed</span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <button onclick="runDemoExample('high')" class="text-left bg-white rounded-lg border border-indigo-200 p-4 hover:border-indigo-400 hover:shadow-md transition-all">
+          <div class="text-xs font-bold text-indigo-600 mb-1">STOP 1</div>
+          <div class="text-sm font-semibold text-gray-900">Score a risky trip &mdash; one click</div>
+          <p class="text-xs text-gray-500 mt-1">We'll pick a poorly-maintained unit, send it on a winter frozen-load run, and show you the failure probability with the reasons why.</p>
+        </button>
+        <button onclick="switchTab('fleet')" class="text-left bg-white rounded-lg border border-indigo-200 p-4 hover:border-indigo-400 hover:shadow-md transition-all">
+          <div class="text-xs font-bold text-indigo-600 mb-1">STOP 2</div>
+          <div class="text-sm font-semibold text-gray-900">See the whole fleet ranked</div>
+          <p class="text-xs text-gray-500 mt-1">All 840 units scored and sorted into LOW / MODERATE / HIGH / CRITICAL tiers &mdash; the daily triage view an ops manager would open.</p>
+        </button>
+        <button onclick="switchTab('costs')" class="text-left bg-white rounded-lg border border-indigo-200 p-4 hover:border-indigo-400 hover:shadow-md transition-all">
+          <div class="text-xs font-bold text-indigo-600 mb-1">STOP 3</div>
+          <div class="text-sm font-semibold text-gray-900">Find the money pits</div>
+          <p class="text-xs text-gray-500 mt-1">Per-unit maintenance cost per engine-hour, plus a classifier that flags chronic high-cost units worth selling instead of fixing.</p>
+        </button>
+      </div>
+    </div>
+
+    <div class="text-center mb-6">
+      <h3 class="text-lg font-bold text-slate-900">Explore all six tools</h3>
+      <p class="text-xs text-gray-400 mt-1">Each card tells you the question it answers &mdash; click any to open it</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -104,7 +170,7 @@
           <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         </div>
         <h3 class="text-lg font-semibold text-gray-900 mb-1">Trip Risk Predictor</h3>
-        <p class="text-sm text-gray-500 mb-3">Predict shutdown probability for individual trips. Select an asset unit, set route and conditions, and get a calibrated risk score with SHAP-driven explanations.</p>
+        <p class="text-sm text-gray-500 mb-3"><span class="font-medium text-gray-700">Answers: "Will this trip fail?"</span> Pick a unit from a dropdown, set the route and season, and get a failure probability &mdash; with the unit's own history explaining why.</p>
         <div class="flex items-center gap-2">
           <span class="text-xs bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-medium">XGBoost</span>
           <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">83 features</span>
@@ -117,7 +183,7 @@
           <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
         </div>
         <h3 class="text-lg font-semibold text-gray-900 mb-1">Fleet Dashboard</h3>
-        <p class="text-sm text-gray-500 mb-3">Real-time fleet health overview. Risk tier distribution, SLXi vs Standard comparison, PM compliance tracking, and sortable unit ranking table.</p>
+        <p class="text-sm text-gray-500 mb-3"><span class="font-medium text-gray-700">Answers: "Which units need attention today?"</span> Every unit scored and ranked, color-coded into four risk tiers, with filters by lane, model year, and maintenance status.</p>
         <div class="flex items-center gap-2">
           <span class="text-xs bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full font-medium">Live Scoring</span>
           <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full" id="home-fleet-count">-</span>
@@ -130,7 +196,7 @@
           <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
         </div>
         <h3 class="text-lg font-semibold text-gray-900 mb-1">Model Comparison</h3>
-        <p class="text-sm text-gray-500 mb-3">Analyze risk and cost patterns by asset model and year. Component vulnerability heatmap, worst-performing cohorts, and targeted recommendations.</p>
+        <p class="text-sm text-gray-500 mb-3"><span class="font-medium text-gray-700">Answers: "Which equipment models are lemons?"</span> Failure rates by make, model, and year &mdash; including which vintages are most weather-sensitive and which components fail on which models.</p>
         <div class="flex items-center gap-2">
           <span class="text-xs bg-purple-50 text-purple-700 px-2 py-0.5 rounded-full font-medium">Analytics</span>
           <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">By Model + Year</span>
@@ -143,7 +209,7 @@
           <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
         </div>
         <h3 class="text-lg font-semibold text-gray-900 mb-1">Repair Patterns</h3>
-        <p class="text-sm text-gray-500 mb-3">Pre-trip repair impact analysis. Dangerous repair combinations, turnaround windows, repeat repair tracking, and component-level failure rate lift.</p>
+        <p class="text-sm text-gray-500 mb-3"><span class="font-medium text-gray-700">Answers: "Does a recent shop visit make a trip safer &mdash; or riskier?"</span> Spoiler: a repair right before dispatch often signals an unresolved issue. This tab quantifies exactly how much.</p>
         <div class="flex items-center gap-2">
           <span class="text-xs bg-orange-50 text-orange-700 px-2 py-0.5 rounded-full font-medium">7/14/30d Windows</span>
           <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">Sequence Analysis</span>
@@ -156,7 +222,7 @@
           <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         </div>
         <h3 class="text-lg font-semibold text-gray-900 mb-1">Cost Per Hour</h3>
-        <p class="text-sm text-gray-500 mb-3">Asset cost per engine-hour predictor. Fleet lookup with PM breakdown by code, two-stage GENREP model, fuel consumption, and scenario planner for new assets.</p>
+        <p class="text-sm text-gray-500 mb-3"><span class="font-medium text-gray-700">Answers: "What does running this unit cost per engine-hour?"</span> Scheduled maintenance + surprise repairs + fuel, per unit &mdash; and a money-pit flag for units worth selling instead of fixing.</p>
         <div class="flex items-center gap-2">
           <span class="text-xs bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full font-medium">Two-Stage RF</span>
           <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">850+ assets</span>
@@ -169,7 +235,7 @@
           <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
         </div>
         <h3 class="text-lg font-semibold text-gray-900 mb-1">Cost Per Mile</h3>
-        <p class="text-sm text-gray-500 mb-3">CPM predictor with GENREP + PM sub-models, per-unit SHAP drivers, fleet ranking, and model comparison across 857 intermodal trailers.</p>
+        <p class="text-sm text-gray-500 mb-3"><span class="font-medium text-gray-700">Answers: "Which trailers cost the most per mile &mdash; and why?"</span> Lifetime maintenance cost-per-mile across 857 intermodal trailers, ranked, with the cost drivers behind each unit's number. A diagnostic for ranking, not a dollar forecast.</p>
         <div class="flex items-center gap-2">
           <span class="text-xs bg-teal-50 text-teal-700 px-2 py-0.5 rounded-full font-medium">XGBoost + RF</span>
           <span class="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded-full">857 units</span>
@@ -178,27 +244,28 @@
 
       <!-- Card: Quick Stats -->
       <div class="bg-gradient-to-br from-indigo-900 to-indigo-700 rounded-xl p-6 shadow-sm text-white">
-        <h3 class="text-lg font-semibold mb-4">Quick Stats</h3>
+        <h3 class="text-lg font-semibold mb-1">The fleet right now</h3>
+        <p class="text-[11px] text-indigo-300 mb-4">Live numbers from the demo dataset</p>
         <div class="space-y-3" id="home-quick-stats">
-          <div class="flex justify-between items-center">
-            <span class="text-gray-400 text-sm">Fleet Units</span>
-            <span class="font-semibold" id="home-total-units">--</span>
+          <div class="flex justify-between items-start gap-2">
+            <div><span class="text-indigo-200 text-sm">Units being scored</span><div class="text-[10px] text-indigo-400">active refrigerated assets</div></div>
+            <span class="font-semibold tabular-nums" id="home-total-units">--</span>
           </div>
-          <div class="flex justify-between items-center">
-            <span class="text-gray-400 text-sm">Avg Fleet Risk</span>
-            <span class="font-semibold" id="home-avg-risk">--</span>
+          <div class="flex justify-between items-start gap-2">
+            <div><span class="text-indigo-200 text-sm">Avg failure risk</span><div class="text-[10px] text-indigo-400">per trip, fleet average</div></div>
+            <span class="font-semibold tabular-nums" id="home-avg-risk">--</span>
           </div>
-          <div class="flex justify-between items-center">
-            <span class="text-gray-400 text-sm">Shutdown Rate</span>
-            <span class="font-semibold" id="home-sd-rate">--</span>
+          <div class="flex justify-between items-start gap-2">
+            <div><span class="text-indigo-200 text-sm">Historical shutdown rate</span><div class="text-[10px] text-indigo-400">trips that actually failed</div></div>
+            <span class="font-semibold tabular-nums" id="home-sd-rate">--</span>
           </div>
-          <div class="flex justify-between items-center">
-            <span class="text-gray-400 text-sm">Avg Cost/Engine-Hr</span>
-            <span class="font-semibold" id="home-avg-cph">--</span>
+          <div class="flex justify-between items-start gap-2">
+            <div><span class="text-indigo-200 text-sm">Avg maintenance cost</span><div class="text-[10px] text-indigo-400">per engine-hour, per unit</div></div>
+            <span class="font-semibold tabular-nums" id="home-avg-cph">--</span>
           </div>
-          <div class="flex justify-between items-center">
-            <span class="text-gray-400 text-sm">PM Overdue</span>
-            <span class="font-semibold text-red-400" id="home-pm-overdue">--</span>
+          <div class="flex justify-between items-start gap-2">
+            <div><span class="text-indigo-200 text-sm">High-risk units</span><div class="text-[10px] text-indigo-400">HIGH + CRITICAL tiers</div></div>
+            <span class="font-semibold text-red-300 tabular-nums" id="home-high-risk">--</span>
           </div>
         </div>
       </div>
@@ -208,6 +275,24 @@
 
   <!-- TAB: Trip Predictor -->
   <main id="view-predictor" class="hidden max-w-5xl mx-auto px-6 py-8">
+
+    <!-- Explainer + one-click examples -->
+    <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm mb-6">
+      <div class="flex items-start justify-between flex-wrap gap-4">
+        <div class="max-w-2xl">
+          <h1 class="text-lg font-bold text-gray-900">Trip Risk Predictor</h1>
+          <p class="text-sm text-gray-500 mt-1">This is the core model. Pick a unit and a trip, and it predicts the chance the refrigeration unit shuts down mid-route &mdash; spoiling the load. Selecting a unit auto-fills its real maintenance history, so the score reflects <span class="font-medium text-gray-700">that specific unit</span>, not a generic average.</p>
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">No idea what to pick? Try one:</span>
+          <div class="flex gap-2">
+            <button onclick="runDemoExample('low')" class="text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-lg px-3 py-2 hover:bg-emerald-100 transition-all">Safe trip example</button>
+            <button onclick="runDemoExample('high')" class="text-xs font-medium bg-red-50 text-red-700 border border-red-200 rounded-lg px-3 py-2 hover:bg-red-100 transition-all">Risky trip example</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
 
       <!-- LEFT: Input Form -->
@@ -215,26 +300,33 @@
 
         <!-- Unit Selection -->
         <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-          <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Unit Selection</h2>
+          <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">Step 1 &mdash; Pick a Unit</h2>
+          <p class="text-xs text-gray-400 mb-4">Choose from the dropdown (or look one up by trailer number). Its maintenance history loads automatically below.</p>
           <div class="grid grid-cols-2 gap-4">
             <div class="col-span-2 relative">
               <label class="block text-sm font-medium text-gray-700 mb-1">Asset Unit</label>
-              <input type="text" id="reefer_unit" placeholder="Type unit number (e.g. AST-1842)" autocomplete="off"
-                class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500">
-              <div id="unit-dropdown" class="hidden absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto"></div>
+              <select id="reefer_unit"
+                class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500 font-mono bg-white">
+                <option value="">Select a unit&hellip;</option>
+              </select>
             </div>
             <div class="col-span-2 relative">
-              <label class="block text-sm font-medium text-gray-700 mb-1">Trailer Number</label>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Trailer Number <span class="text-gray-400 font-normal">(optional lookup)</span></label>
               <input type="text" id="trailer_num" placeholder="e.g. 900001" autocomplete="off"
                 class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500">
               <div id="trailer-dropdown" class="hidden absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto"></div>
               <p id="trailer-match" class="text-xs text-gray-400 mt-1 hidden"></p>
             </div>
             <div id="unit-info" class="col-span-2 hidden">
-              <div class="flex gap-3 mt-1">
+              <div class="flex gap-3 mt-1 mb-3">
                 <span id="unit-badge-model" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800"></span>
                 <span id="unit-badge-year" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800"></span>
                 <span id="unit-badge-type" class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800"></span>
+              </div>
+              <!-- Unit vs fleet mini-chart -->
+              <div class="bg-slate-50 border border-slate-200 rounded-lg p-3">
+                <div class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-2">This unit vs a typical fleet unit</div>
+                <div id="unit-health-chart" class="space-y-2"></div>
               </div>
             </div>
           </div>
@@ -242,7 +334,7 @@
 
         <!-- Trip Details -->
         <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-          <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Trip Details</h2>
+          <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-4">Step 2 &mdash; Describe the Trip</h2>
           <div class="grid grid-cols-2 gap-4">
             <div class="col-span-2">
               <label class="block text-sm font-medium text-gray-700 mb-1">Route</label>
@@ -283,8 +375,8 @@
         <!-- Maintenance History (auto-filled from unit, can override) -->
         <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
           <div class="flex items-center justify-between mb-4">
-            <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Maintenance History</h2>
-            <span class="text-xs text-gray-400">Auto-filled from unit data</span>
+            <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Step 3 &mdash; Maintenance History</h2>
+            <span class="text-xs text-gray-400">Auto-filled when you pick a unit &mdash; edit to run what-ifs</span>
           </div>
           <div class="grid grid-cols-3 gap-4">
             <div>
@@ -331,7 +423,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
               </svg>
             </div>
-            <p class="text-gray-400 text-sm">Select a unit and trip details,<br>then click Calculate</p>
+            <p class="text-gray-400 text-sm">Pick a unit and trip on the left, then click Calculate &mdash;<br>or use a one-click example above.</p>
           </div>
 
           <div id="result-content" class="hidden fade-in">
@@ -339,6 +431,7 @@
               <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Shutdown Probability</div>
               <div id="score-display" class="text-6xl font-bold tabular-nums mb-2">--</div>
               <div id="tier-badge" class="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-bold"></div>
+              <p id="result-verdict" class="text-xs text-gray-500 mt-3 text-left bg-slate-50 border border-slate-200 rounded-lg p-3"></p>
             </div>
 
             <!-- Score Bar -->
@@ -364,7 +457,8 @@
 
         <!-- Fleet Context -->
         <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-          <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Training Data Context</h2>
+          <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">What the Model Learned From</h2>
+          <p class="text-xs text-gray-400 mb-3">A year of trips where the outcome is known. "AUC 0.84" means the model ranks a random failing trip above a random safe one 84% of the time (0.50 = coin flip, 1.00 = perfect).</p>
           <div class="space-y-2 text-sm text-gray-600">
             <div class="flex justify-between"><span>Training base rate</span><span class="font-medium">3.34%</span></div>
             <div class="flex justify-between"><span>Training trips (2025)</span><span class="font-medium">23,473</span></div>
@@ -376,12 +470,13 @@
 
         <!-- Tier Legend -->
         <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-          <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Risk Tiers</h2>
+          <h2 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-1">Risk Tiers</h2>
+          <p class="text-xs text-gray-400 mb-3">Cut at the fleet's 60th / 80th / 95th risk percentiles &mdash; each tier maps to an action.</p>
           <div class="space-y-2">
-            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-green-500"></div><span class="text-sm text-gray-600">LOW &mdash; &lt;2.0% shutdown probability</span></div>
-            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-yellow-500"></div><span class="text-sm text-gray-600">MODERATE &mdash; 2.0&ndash;4.7%</span></div>
-            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-red-500"></div><span class="text-sm text-gray-600">HIGH &mdash; 4.7&ndash;12.9%</span></div>
-            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-red-900"></div><span class="text-sm text-gray-600">CRITICAL &mdash; &gt;12.9%</span></div>
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-green-500 flex-none"></div><span class="text-sm text-gray-600"><b>LOW</b> &lt;2.0% &mdash; dispatch as planned</span></div>
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-yellow-500 flex-none"></div><span class="text-sm text-gray-600"><b>MODERATE</b> 2.0&ndash;4.7% &mdash; normal pre-trip checks</span></div>
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-red-500 flex-none"></div><span class="text-sm text-gray-600"><b>HIGH</b> 4.7&ndash;12.9% &mdash; inspect before dispatch</span></div>
+            <div class="flex items-center gap-2"><div class="w-3 h-3 rounded-full bg-red-900 flex-none"></div><span class="text-sm text-gray-600"><b>CRITICAL</b> &gt;12.9% &mdash; hold; fix or swap the unit</span></div>
           </div>
         </div>
       </div>
@@ -390,6 +485,18 @@
 
   <!-- TAB: Fleet Dashboard -->
   <main id="view-fleet" class="hidden max-w-7xl mx-auto px-6 py-8">
+
+    <!-- What am I looking at? -->
+    <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm mb-6">
+      <h1 class="text-lg font-bold text-gray-900">Fleet Dashboard</h1>
+      <p class="text-sm text-gray-500 mt-1 max-w-4xl">Every unit in the fleet, re-scored by the risk model and sorted into four tiers. This is the screen an operations manager would open each morning: <span class="font-medium text-gray-700">start with the red slice</span> (Critical), use the filters to isolate a lane or model year, and the ranking table at the bottom tells you exactly which units to pull for inspection. Everything updates live as you filter.</p>
+      <div class="flex flex-wrap gap-x-5 gap-y-1 mt-3 text-xs text-gray-500">
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>LOW &mdash; dispatch as planned</span>
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-yellow-500"></span>MODERATE &mdash; normal checks</span>
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>HIGH &mdash; inspect before dispatch</span>
+        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-red-900"></span>CRITICAL &mdash; hold; fix or swap</span>
+      </div>
+    </div>
 
     <!-- Filter Bar -->
     <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm mb-6 sticky top-0 z-20">
@@ -626,6 +733,12 @@
     <div id="models-loading" class="text-center py-16 text-gray-400">Loading model comparison…</div>
     <div id="models-content" class="hidden">
 
+    <!-- What am I looking at? -->
+    <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm mb-6">
+      <h1 class="text-lg font-bold text-gray-900">Model Comparison</h1>
+      <p class="text-sm text-gray-500 mt-1 max-w-4xl">Not all equipment is built equal. This tab compares failure rates <span class="font-medium text-gray-700">by make, model, and year</span> to answer purchasing and retirement questions: which vintages are chronically unreliable, which models fall apart in winter, and which components fail on which platforms. The heatmap below re-scores every unit under all four seasons to expose weather-sensitive cohorts.</p>
+    </div>
+
     <!-- Filter Bar -->
     <div class="bg-white rounded-xl border border-gray-200 p-4 shadow-sm mb-6 sticky top-0 z-20">
       <div class="flex items-center justify-between mb-3 flex-wrap gap-3">
@@ -816,6 +929,12 @@
 
     <div id="repairs-loading" class="text-center py-16 text-gray-400">Loading repair pattern analysis...</div>
     <div id="repairs-content" class="hidden">
+
+    <!-- What am I looking at? -->
+    <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm mb-6">
+      <h1 class="text-lg font-bold text-gray-900">Repair Patterns</h1>
+      <p class="text-sm text-gray-500 mt-1 max-w-4xl">A counterintuitive finding, quantified: <span class="font-medium text-gray-700">a unit repaired shortly before a trip is often riskier, not safer</span> &mdash; the shop visit signals an unresolved problem. The cards below compare failure rates for trips with vs. without a recent repair. "Lift" means how many times riskier than the baseline: lift 3.0 = three times the normal failure rate.</p>
+    </div>
 
     <!-- Summary Cards -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -1018,6 +1137,12 @@
     <div id="costs-loading" class="text-center py-16 text-gray-400">Loading cost per hour...</div>
     <div id="costs-content" class="hidden">
 
+    <!-- What am I looking at? -->
+    <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm mb-6">
+      <h1 class="text-lg font-bold text-gray-900">Cost Per Hour (CPH)</h1>
+      <p class="text-sm text-gray-500 mt-1 max-w-4xl">What does it cost to keep each unit running, per hour its engine turns? Three ingredients: <span class="font-semibold text-blue-700">PM $/hr</span> (scheduled maintenance &mdash; predictable, good for budgeting), <span class="font-semibold text-orange-700">GENREP $/hr</span> (surprise repairs &mdash; treat as a range), and fuel. Units flagged as <span class="font-semibold text-red-700">money pits</span> are chronic high-cost assets where selling usually beats another repair bill. At ~4,000 engine-hours a year, every $1/hr here is <span class="font-medium text-gray-700">$4,000 a year per unit</span>.</p>
+    </div>
+
     <!-- Sub-tab navigation -->
     <div class="flex gap-1 bg-gray-100 rounded-lg p-1 mb-6 w-fit">
       <button onclick="switchCphSubTab('fleet')" id="cph-sub-fleet"
@@ -1029,19 +1154,26 @@
     <!-- ========== SUB-TAB: Existing Fleet Predictor ========== -->
     <div id="cph-view-fleet">
       <!-- Summary cards -->
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
         <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
           <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">Fleet Avg Total $/Hr</div>
           <div class="text-2xl font-bold text-gray-900" id="cph-total">-</div>
-          <div class="text-xs text-gray-400 mt-1">PM + Repair + Fuel</div>
+          <div class="text-xs text-gray-400 mt-1" id="cph-total-annual">PM + Repair + Fuel</div>
         </div>
         <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
           <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">Avg PM $/Hr</div>
           <div class="text-2xl font-bold text-blue-600" id="cph-pm-avg">-</div>
+          <div class="text-xs text-gray-400 mt-1">scheduled maintenance</div>
         </div>
         <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
           <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">Avg GENREP $/Hr</div>
           <div class="text-2xl font-bold text-orange-600" id="cph-genrep-avg">-</div>
+          <div class="text-xs text-gray-400 mt-1">surprise repairs</div>
+        </div>
+        <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+          <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">Money Pits Flagged</div>
+          <div class="text-2xl font-bold text-red-700" id="cph-moneypit-count">-</div>
+          <div class="text-xs text-gray-400 mt-1" id="cph-moneypit-pct">sell-vs-keep candidates</div>
         </div>
         <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
           <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">Assets Analyzed</div>
@@ -1179,6 +1311,12 @@
   <main id="view-cpm" class="hidden max-w-7xl mx-auto px-6 py-8">
     <div id="cpm-loading" class="text-center py-16 text-gray-400">Loading CPM data...</div>
     <div id="cpm-content" class="hidden">
+
+    <!-- What am I looking at? -->
+    <div class="bg-white rounded-xl border border-gray-200 p-5 shadow-sm mb-6">
+      <h1 class="text-lg font-bold text-gray-900">Cost Per Mile (CPM)</h1>
+      <p class="text-sm text-gray-500 mt-1 max-w-4xl">Lifetime maintenance cost per mile for 857 intermodal trailers, split into <span class="font-semibold text-orange-700">general repairs</span> and <span class="font-semibold text-blue-700">scheduled maintenance</span>. Pick any unit to see <span class="font-medium text-gray-700">what drives its cost</span> (the SHAP charts show each factor pushing the number up or down), or open the Fleet Dashboard sub-tab to rank the whole fleet. Use it to rank units and diagnose cost drivers &mdash; not to forecast exact dollars.</p>
+    </div>
 
     <!-- Sub-tab navigation -->
     <div class="flex gap-1 bg-gray-100 rounded-lg p-1 mb-6 w-fit">
@@ -1573,7 +1711,7 @@
       <div class="flex items-center justify-between mb-3 flex-wrap gap-3">
         <div>
           <h2 class="text-lg font-bold text-gray-900">3-Month Pilot Validation</h2>
-          <p class="text-xs text-gray-500 mt-1">Capture fleet-risk snapshots, compare predictions vs observed outcomes, and track intervention impact on fill-rate over the pilot window.</p>
+          <p class="text-xs text-gray-500 mt-1">Internal ops tooling: does the model actually work in the field? Capture fleet-risk snapshots over time, compare predictions against what really happened, and measure whether intervening on high-risk units reduced failures vs. a control group.</p>
         </div>
         <div class="flex items-center gap-3 text-xs">
           <div class="flex flex-col">
@@ -1768,7 +1906,7 @@
       <div class="flex items-start justify-between flex-wrap gap-3">
         <div>
           <h2 class="text-lg font-bold text-gray-900">Data Refresh &amp; Model Retrain</h2>
-          <p class="text-xs text-gray-500 mt-1 max-w-3xl">Stage updated source files for the next model refresh. This page validates that all required files are present and flags filename / extension mismatches before the project team runs the Python retraining pipeline.</p>
+          <p class="text-xs text-gray-500 mt-1 max-w-3xl">Internal ops tooling: how the models stay current. Non-technical staff stage updated source files here; the page validates every filename and format before the Python retraining pipeline runs (~10&ndash;15 min end to end). The pipeline steps at the bottom show the full engineering flow.</p>
         </div>
         <div class="flex items-center gap-2">
           <button onclick="validateRefreshFiles()" class="inline-flex items-center gap-1 text-xs font-medium bg-blue-600 text-white rounded-md px-3 py-1.5 hover:bg-blue-700 shadow-sm">Validate All</button>
@@ -1883,6 +2021,12 @@
       .then(r => r.json())
       .then(units => {
         ALL_UNITS = units.filter(u => u && u !== 'NaN');
+        const sel = document.getElementById('reefer_unit');
+        ALL_UNITS.forEach(u => {
+          const opt = document.createElement('option');
+          opt.value = u; opt.textContent = u;
+          sel.appendChild(opt);
+        });
       });
 
     // Load fleet data for trailer->reefer mapping
@@ -1914,28 +2058,15 @@
 
     loadData();
 
-    // Searchable unit input
+    // Unit dropdown — selecting a unit auto-loads its history
     const unitInput = document.getElementById('reefer_unit');
-    const unitDropdown = document.getElementById('unit-dropdown');
 
-    unitInput.addEventListener('input', function() {
-      const query = this.value.toUpperCase();
-      if (query.length < 1) { unitDropdown.classList.add('hidden'); return; }
-      const matches = ALL_UNITS.filter(u => u.toUpperCase().includes(query)).slice(0, 20);
-      if (matches.length === 0) { unitDropdown.classList.add('hidden'); return; }
-      unitDropdown.innerHTML = matches.map(u =>
-        `<div class="px-3 py-2 text-sm cursor-pointer hover:bg-blue-50 transition-colors" onclick="selectUnit('${u}')">${u}</div>`
-      ).join('');
-      unitDropdown.classList.remove('hidden');
-    });
-
-    unitInput.addEventListener('blur', function() {
-      setTimeout(() => unitDropdown.classList.add('hidden'), 200);
+    unitInput.addEventListener('change', function() {
+      loadUnitInfo(this.value);
     });
 
     function selectUnit(unit) {
       unitInput.value = unit;
-      unitDropdown.classList.add('hidden');
       loadUnitInfo(unit);
     }
 
@@ -1992,21 +2123,12 @@
       }
     }
 
-    // Also trigger on Enter key
-    unitInput.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        unitDropdown.classList.add('hidden');
-        const unit = this.value.trim();
-        if (ALL_UNITS.includes(unit)) loadUnitInfo(unit);
-      }
-    });
-
     function loadUnitInfo(unit) {
       if (!unit) {
         document.getElementById('unit-info').classList.add('hidden');
-        return;
+        return Promise.resolve();
       }
-      fetch(`/api/unit/${unit}`)
+      return fetch(`/api/unit/${unit}`)
         .then(r => r.json())
         .then(data => {
           const info = data.info;
@@ -2034,7 +2156,76 @@
               el.value = Math.round(val * 100) / 100;
             }
           }
+
+          renderUnitHealthChart(snap);
         });
+    }
+
+    // Fleet medians (from feature_defaults.json) for the unit-vs-fleet comparison bars
+    const FLEET_TYPICAL = {
+      repair_cum_cost:  { label: 'Lifetime repair spend', median: 4803, fmt: v => '$' + Math.round(v).toLocaleString() },
+      repair_count_365d:{ label: 'Repairs, last 12 months', median: 6,  fmt: v => Math.round(v) },
+      unique_compcodes_365d: { label: 'Distinct components repaired', median: 9, fmt: v => Math.round(v) },
+    };
+
+    function renderUnitHealthChart(snap) {
+      const chart = document.getElementById('unit-health-chart');
+      if (!chart) return;
+      chart.innerHTML = Object.entries(FLEET_TYPICAL).map(([key, cfg]) => {
+        const val = snap[key];
+        if (val == null) return '';
+        const ratio = cfg.median > 0 ? val / cfg.median : 0;
+        const pct = Math.min(ratio / 2 * 100, 100); // bar full at 2x the median
+        const medianPct = 50;
+        const color = ratio > 1.5 ? 'bg-red-400' : ratio > 1.0 ? 'bg-amber-400' : 'bg-emerald-400';
+        const note = ratio > 1.5 ? 'well above typical' : ratio > 1.0 ? 'above typical' : 'at or below typical';
+        return `
+          <div>
+            <div class="flex justify-between text-[11px] text-gray-500 mb-0.5">
+              <span>${cfg.label}</span>
+              <span class="font-medium text-gray-700">${cfg.fmt(val)} <span class="text-gray-400 font-normal">(typical: ${cfg.fmt(cfg.median)} &middot; ${note})</span></span>
+            </div>
+            <div class="h-2 bg-gray-200 rounded-full relative overflow-visible">
+              <div class="h-2 ${color} rounded-full transition-all duration-500" style="width:${pct}%"></div>
+              <div class="absolute top-[-2px] h-3 w-0.5 bg-gray-500" style="left:${medianPct}%" title="fleet median"></div>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    // ---- One-click demo examples (used by Home tour + Predictor buttons) ----
+    const DEMO_EXAMPLES = {
+      low: {
+        unit: 'AST-1871', season: 'Summer', service: 'DRY',
+        route: 'Hub-Metro -> Hub-East', miles: 550, temp: 10,
+      },
+      high: {
+        unit: 'AST-1791', season: 'Winter', service: 'FRZ',
+        route: 'Hub-East -> Hub-Atlantic', miles: 2400, temp: -23,
+      },
+    };
+
+    async function runDemoExample(kind) {
+      const ex = DEMO_EXAMPLES[kind];
+      if (!ex) return;
+      switchTab('predictor');
+
+      // Wait for unit list if the page just loaded
+      for (let i = 0; i < 20 && ALL_UNITS.length === 0; i++) {
+        await new Promise(r => setTimeout(r, 250));
+      }
+
+      document.getElementById('reefer_unit').value = ex.unit;
+      document.getElementById('season').value = ex.season;
+      document.getElementById('service_type').value = ex.service;
+      document.getElementById('leg_miles').value = ex.miles;
+      document.getElementById('temperature').value = ex.temp;
+      const routeSel = document.getElementById('route');
+      if ([...routeSel.options].some(o => o.value === ex.route)) routeSel.value = ex.route;
+
+      await loadUnitInfo(ex.unit);  // auto-fills maintenance history
+      await predict();
+      document.getElementById('result-panel').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     // Auto-fill origin/destination from route
@@ -3728,6 +3919,21 @@
       const markerPos = Math.min(data.risk_score * 100, 98);
       document.getElementById('score-marker').style.left = markerPos + '%';
 
+      // Plain-language verdict
+      const BASE_RATE = 3.34; // training base rate %
+      const mult = data.risk_percent / BASE_RATE;
+      const multTxt = mult >= 1.15 ? `about <b>${mult.toFixed(1)}&times; the fleet's typical ${BASE_RATE}% failure rate</b>`
+                    : mult <= 0.85 ? `only <b>${mult.toFixed(1)}&times; the fleet's typical ${BASE_RATE}% failure rate</b>`
+                    : `right around <b>the fleet's typical ${BASE_RATE}% failure rate</b>`;
+      const action = {
+        LOW: 'Dispatch as planned — no action needed.',
+        MODERATE: 'Acceptable to dispatch; worth a glance at the pre-trip inspection.',
+        HIGH: 'Inspect before dispatch — this unit\u2019s history is working against it.',
+        CRITICAL: 'Hold and inspect. On a frozen load, a shutdown at this probability is not a risk worth taking.',
+      }[data.tier] || '';
+      document.getElementById('result-verdict').innerHTML =
+        `In plain terms: out of 100 trips like this one, roughly <b>${Math.max(1, Math.round(data.risk_percent))} would end in a mid-route shutdown</b>. That's ${multTxt}. ${action}`;
+
       // Risk factors
       const factorsDiv = document.getElementById('risk-factors');
       factorsDiv.innerHTML = '<div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Key Risk Drivers</div>';
@@ -3996,7 +4202,8 @@
         document.getElementById('home-total-units').textContent = summary.total_units || '-';
         document.getElementById('home-avg-risk').textContent = (summary.avg_risk || 0) + '%';
         document.getElementById('home-sd-rate').textContent = (summary.fleet_sd_rate || 0) + '%';
-        document.getElementById('home-pm-overdue').textContent = summary.pm_overdue_count || '0';
+        const hi = (summary.tier_counts?.HIGH || 0) + (summary.tier_counts?.CRITICAL || 0);
+        document.getElementById('home-high-risk').textContent = hi ? hi + ' of ' + summary.total_units : '--';
         document.getElementById('home-fleet-count').textContent = (summary.total_units || '-') + ' units';
 
         if (cph.fleet_avg_total_cph != null) {
@@ -4060,11 +4267,25 @@
 
     function renderCphFleetSummary() {
       const s = CPH_SUMMARY_DATA;
-      document.getElementById('cph-total').textContent = s.avg_total_cph != null ? '$' + s.avg_total_cph.toFixed(4) : '-';
-      document.getElementById('cph-pm-avg').textContent = s.avg_pm_cph != null ? '$' + s.avg_pm_cph.toFixed(4) : '-';
-      document.getElementById('cph-genrep-avg').textContent = s.avg_genrep_cph != null ? '$' + s.avg_genrep_cph.toFixed(4) : '-';
+      document.getElementById('cph-total').textContent = s.avg_total_cph != null ? '$' + s.avg_total_cph.toFixed(2) : '-';
+      document.getElementById('cph-pm-avg').textContent = s.avg_pm_cph != null ? '$' + s.avg_pm_cph.toFixed(2) : '-';
+      document.getElementById('cph-genrep-avg').textContent = s.avg_genrep_cph != null ? '$' + s.avg_genrep_cph.toFixed(2) : '-';
       document.getElementById('cph-unit-count').textContent = (s.total_units || 0).toLocaleString();
       document.getElementById('cph-fuel-count').textContent = (s.units_with_fuel || 0) + ' with fuel data';
+
+      // Annualized context (~4,000 engine-hours/yr)
+      if (s.avg_total_cph != null) {
+        document.getElementById('cph-total-annual').textContent =
+          '\u2248 $' + Math.round(s.avg_total_cph * 4000).toLocaleString() + '/yr per unit';
+      }
+
+      // Money-pit count from per-unit fleet data
+      const pits = CPH_FLEET_DATA.filter(u => u.is_money_pit).length;
+      document.getElementById('cph-moneypit-count').textContent = pits;
+      if (CPH_FLEET_DATA.length > 0) {
+        document.getElementById('cph-moneypit-pct').textContent =
+          Math.round(pits / CPH_FLEET_DATA.length * 100) + '% of fleet \u00b7 sell-vs-keep candidates';
+      }
     }
 
     function populateCphUnitDropdown() {
